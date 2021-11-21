@@ -1,3 +1,3 @@
-# postmessage Vulnerability Demo
+# postMessage Vulnerability Demo
 
 :)
