@@ -11,6 +11,9 @@
 			msg = JSON.parse(e.data)
 			if (msg.readyToPlay){
 				document.getElementById("fs").innerText = "Ready to showcase your SUDOKU skills Mr. <p>" + msg.name + "</p>";
+				if (msg.url){
+					window.open(msg.url)
+				}
 			}
 		}
 		window.addEventListener("message", postMessageHandler, false);
