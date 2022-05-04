@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Start</title>
+
+	<script>
+		function start(){
+			var frame = document.getElementById('explFrame').contentWindow
+			frame.postMessage(JSON.stringify({"readyToPlay": true, "name": "Voorivex"}), "*");
+		}
+	</script>
+</head>
+<body>
+
+<h1>Start</h1>
+<pre>
+<iframe sandbox="allow-scripts allow-top-navigation allow-forms allow-popups allow-same-origin" src="http://somewebsite.com/index.html" id='explFrame' height="300px" width="600px"></iframe><br>
+<input type="button" value="Start" onclick="start()" >
+</body>
+</html>

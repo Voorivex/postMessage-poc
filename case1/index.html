@@ -10,7 +10,7 @@
 			// e.origin should be checked here
 			msg = JSON.parse(e.data)
 			if (msg.readyToPlay){
-				document.getElementById("fs").innerText = "Ready to showcase your SUDOKU skills Mr. <p>" + msg.name + "</p>";
+				document.getElementById("fs").innerText = "Ready to showcase your SUDOKU skills Mr. " + msg.name;
 				if (msg.url){
 					window.open(msg.url)
 				}

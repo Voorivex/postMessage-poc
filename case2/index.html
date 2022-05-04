@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Some Site</title>
+
+	<body>
+	<script>
+	var originAllowed = function(o) {
+	  try {
+	    return new URL(o,window.location.origin).hostname === new URL(window.location).hostname;
+	  } catch (e) {
+	    return false;
+	  }
+	}
+
+	window.addEventListener("message", function(e) {
+	  if (originAllowed(e.origin) && e.data) {
+	    try {
+	      t = JSON.parse(e.data)
+	    } catch (e) {}
+	    if (t && "object" == typeof t && t.name){
+	    	document.getElementById("fs").innerText = "Ready to showcase your SUDOKU skills Mr. " + t.name
+	    }
+	    if (t && "object" == typeof t && t.goto) { 
+	    	window.location = t.goto;
+	    }
+	  }
+	});
+	</script>
+
+</head>
+<body>
+
+<h2 id="fs">Game is loading...</h2>
+<img src="sudoku.png">
+
+</body>
+</html>

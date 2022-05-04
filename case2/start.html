@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Start</title>
+
+	<script>
+		var game_url = "http://somewebsite.com/";
+		function popup(){
+			window.test = open(game_url, "pop", "width=850,height=750,resizable=1");
+			setTimeout(msg, 1000)
+		}
+		function msg(){
+			window.test.postMessage(JSON.stringify({"readyToPlay": true, "goto": "Voorivex"}), "*");
+		}
+	</script>
+</head>
+<body>
+
+<h1>Start</h1>
+<input type="button" value="Start" onclick="popup()" >
+
+</body>
+</html>
